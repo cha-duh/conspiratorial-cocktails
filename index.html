@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Conspiratorial Cocktails</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { overflow: hidden; }
+    .slider {
+      display: flex;
+      width: 100vw;
+      height: 100vh;
+      overflow-x: scroll;
+      scroll-snap-type: x mandatory;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-width: none;
+    }
+    .slider::-webkit-scrollbar { display: none; }
+    .slide {
+      flex: 0 0 100vw;
+      height: 100vh;
+      scroll-snap-align: start;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    #slide1 { background-image: url('image1.jpg'); background-color: #111; }
+    #slide2 { background-image: url('image2.jpg'); background-color: #222; }
+  </style>
+</head>
+<body>
+  <div class="slider">
+    <div class="slide" id="slide1"></div>
+    <div class="slide" id="slide2"></div>
+  </div>
+</body>
+</html>
