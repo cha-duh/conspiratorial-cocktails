@@ -27,15 +27,53 @@
     }
     #slide1 { background-image: url('assets/redacted-chatgpt.png'); background-color: #111; }
     #slide2 { background-image: url('assets/dead-drop-chatgpt.png'); background-color: #222; }
+    .arrow {
+      position: fixed;
+      top: 50%;
+      transform: translateY(-50%);
+      background: rgba(0, 0, 0, 0.35);
+      border: none;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 2.5rem;
+      line-height: 1;
+      padding: 1rem 0.6rem;
+      cursor: pointer;
+      z-index: 10;
+      opacity: 0;
+      transition: opacity 0.3s;
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .arrow.visible { opacity: 1; }
+    .arrow-left { left: 0; border-radius: 0 6px 6px 0; }
+    .arrow-right { right: 0; border-radius: 6px 0 0 6px; }
   </style>
 </head>
 <body>
+  <button class="arrow arrow-left" aria-label="Previous">&#8249;</button>
+  <button class="arrow arrow-right" aria-label="Next">&#8250;</button>
   <div class="slider">
     <div class="slide" id="slide1"></div>
     <div class="slide" id="slide2"></div>
   </div>
   <script>
     const slider = document.querySelector('.slider');
+    const leftArrow = document.querySelector('.arrow-left');
+    const rightArrow = document.querySelector('.arrow-right');
+
+    function updateArrows() {
+      const atStart = slider.scrollLeft < 10;
+      const atEnd = slider.scrollLeft > slider.scrollWidth - slider.clientWidth - 10;
+      leftArrow.classList.toggle('visible', !atStart);
+      rightArrow.classList.toggle('visible', !atEnd);
+    }
+
+    slider.addEventListener('scroll', updateArrows, { passive: true });
+    updateArrows();
+
+    leftArrow.addEventListener('click', () => slider.scrollBy({ left: -slider.clientWidth, behavior: 'smooth' }));
+    rightArrow.addEventListener('click', () => slider.scrollBy({ left: slider.clientWidth, behavior: 'smooth' }));
+
     let startX, startScroll, dragging = false;
 
     slider.addEventListener('mousedown', e => {
