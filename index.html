@@ -34,5 +34,26 @@
     <div class="slide" id="slide1"></div>
     <div class="slide" id="slide2"></div>
   </div>
+  <script>
+    const slider = document.querySelector('.slider');
+    let startX, startScroll, dragging = false;
+
+    slider.addEventListener('mousedown', e => {
+      dragging = true;
+      startX = e.pageX;
+      startScroll = slider.scrollLeft;
+      slider.style.cursor = 'grabbing';
+    });
+
+    window.addEventListener('mousemove', e => {
+      if (!dragging) return;
+      slider.scrollLeft = startScroll - (e.pageX - startX);
+    });
+
+    window.addEventListener('mouseup', () => {
+      dragging = false;
+      slider.style.cursor = '';
+    });
+  </script>
 </body>
 </html>
